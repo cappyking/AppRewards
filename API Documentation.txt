@@ -1,0 +1,217 @@
+API Documentation
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+1. User Registration:
+> POST request.
+> No permissions required to access.
+> Add api/register/ to the base url.
+> The API requires you to add form data under Key names 
+		a.username 
+		b.email
+		c.password
+> Upon a successful submission of request, the API shall return an id,username confirmation and an access token which can be used to perform opperations.
+> Example: 
+	a.Data sent:
+			{
+				"username": "admin",
+				"email": "admin@bot.com",
+				"password": "Password@123"
+			}
+	b. Response:
+			{
+			"user": {
+				"id": 03,
+				"username": "admin"
+				},
+			"token": "fc85a5b1c65409ff7537f9ddddd740b5cc1ec4844dc9e3456dbe8ca5778798"
+			}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+2. User Login:
+> POST request.
+> No permissions required to access.
+> Add api/login/ to the base url.
+> The API requires you to add form data under Key names 
+		a.username 
+		b.password
+> Upon a successful submission of request, the API shall return an access token which can be used to perform opperations and the time stamp until when the token is valid.
+> Example:
+	a. Data sent:
+			{
+    				"username": "admin",
+   				"password": "Password@123"
+			}
+	b. Response:
+			{
+    				"expiry": "2022-11-01T01:51:30.410766Z",
+    				"token": "602f270a8cd0789048fe86ce0446d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+			}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+3. User Logout:
+> POST request.
+> For disengaging current token of the user.
+> Add api/logout/ to the base url.
+> The API requires you to add form data under Key names:
+	a.Authorization
+> Upon a successful submission of request, the API shall return 1 and disengage your current token.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86ce0446d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+			}
+	b. Response:
+			1
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+4. User Logoutall:
+> POST request.
+> For disengaging every token associated with the user.
+> Add api/logoutall/ to the base url.
+> The API requires you to add form data under Key names:
+	a.Authorization
+> Upon a successful submission of request, the API shall return 1 and disengage your current token.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86ce0446d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+			}
+	b. Response:
+			1
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+5. User Task Fetch:
+> GET request.
+> Permission based API. Required token.
+> The API requires you to add form data under Key names:
+	a.Authorization
+> The API returns as response the username of the user, total points and all the tasks that are assigned by the administrator to the user along with details of the task which are status,title,point,category,task primary key,user primary key and image status.
+> For using the API, add api/user/ to the base url while using a GET method.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86ce04546d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+			}
+	b. Response:
+			{
+    				"Name": "admin",
+    				"Total Points": 110,
+    	"Data": [
+        		{
+            			"id": 110,
+            			"title": "fb",
+            			"point": 110,
+            			"category": "Social",
+            			"status": "C",
+            			"image": "imageproof/c1.PNG",
+            			"user": 1
+        		},
+        		{	
+            			"id": 112,
+            			"title": "Facebook",
+            			"point": 120,
+           			"category": "Social",
+            			"status": "C",
+            			"image": "imageproof/f.PNG",
+            			"user": 1
+        		}
+    		]
+			}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+6. User Photo Proof Upload:
+> PUT request.
+> Permission based API. Required token.
+> The API is used to upload/send image proof for tasks that are completed. The API accepts, Token for authorization, title of the app you want to add proof to, and the image file itself. Upon a successful updation of image into the database, the API shall return "Posted".
+> The API requires you to add form data under Key names:
+	a.Authorization
+	b.title
+	c.image
+> For using the API, add api/user/ to the base url while using a PUT method.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86ce0446jd76e28d31da0ea7bdb46fe0e7ec8hja3f9b21",
+				"title":"Facebook"
+				"image":file.jpg
+			}
+	b. Response:
+			"Posted"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+7. Admin Task Fetch:
+> GET request.
+> Permission based API, requires Token and admin rights to access.
+> The API is used to access the master task library of the apprewards system. 
+> Upon a successful verification, the API returns as response the list of apps and the imformation about those apps which are title,ategory,point,applink, and  the primary key id of the app.
+> The API requires you to add form data under Key names:
+	a.Authorization
+> For using the API, add api/admin/ to the base url while using a GET method.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86cs04546d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+			}
+	b. Response:
+			[
+    				{
+        				"id": 1,
+        				"title": "fb",
+        				"point": 110,
+        				"category": "Social",
+        				"applink": "com.facebook.katana"
+    				},
+    				{				
+        				"id": 2,
+        				"title": "Facebook",
+        				"point": 120,
+        				"category": "Social",
+        				"applink": "com.facebook.katana"
+    				}
+			]
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+8. Admin Add Task:
+> POST request.
+> Permission based API, requires Token and admin rights to access.
+> The API is used to access the master task library of the apprewards system, and add new apps to it. 
+> Upon a successful verification and updation of database, the API returns as response "Saved".
+> The API requires you to add form data under Key names:
+	a.Authorization
+	b.title
+	c.point
+> For using the API, add api/admin/ to the base url while using a POST method.
+> Example:
+	a. Data sent:
+			{
+    				"Authorization": "Token 602f270a8cd0789048fe86cs04546d76e28d31da0ea7bdb46fe0e7ec8hja3f9b21"
+				"title":"rush"
+				"point":175
+			}
+	b. Response:
+			"Saved"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------		
+
+9. Fetch Particular application:
+> GET request.
+> No permission required to access the API.
+> The API returns the user with with particular app details which include title,category,applink,point and primary key id of the app in the databse.
+> For using the API, add api/getapp/<int:id>/ to the base url while using a POST method. Here the int id refers to the primary key id of the app.
+> Example:
+	a. Request: base_url/api/getapp/1/
+	b. Response: 
+			{
+    				"id": 1,
+    				"title": "fb",
+    				"point": 110,
+    				"category": "Social",
+    				"applink": "com.facebook.katana"
+			}
