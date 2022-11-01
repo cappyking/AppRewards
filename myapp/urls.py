@@ -19,7 +19,7 @@ urlpatterns = [
     path('addapp/', addapp, name='addapp'),
     path('addimage/<int:id>', addimage, name='addimage'),
     # api-endpoint urls pointed to api.py
-    path('getapp/<int:id>/', getapps, name='getappapi'),
+    path('api/getapp/<int:id>/', getapps, name='getappapi'),
     path('api/register/', RegisterAPI.as_view(), name='registerationapi'),
     path('api/login/', LoginAPI.as_view(), name='loginapi'),
     path('api/logout/', knox_views.LogoutView.as_view(), name='logoutapi'),
